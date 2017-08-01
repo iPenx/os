@@ -1,0 +1,7 @@
+memory: host=32, guest=32
+romimage: file="/usr/local/share/bochs/BIOS-bochs-latest"
+vgaromimage: file="/usr/local/share/bochs/VGABIOS-lgpl-latest"
+boot: disk
+ata0: enabled=1, ioaddr1=0x1f0, ioaddr2=0x3f0, irq=14
+ata0-master: type=disk, path="c.img", mode=flat, cylinders=130, heads=16, spt=63, model="Generic 1234", biosdetect=auto, translation=auto
+keyboard: type=mf, serial_delay=250, paste_delay=100000, user_shortcut=none

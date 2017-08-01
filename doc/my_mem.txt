@@ -1,0 +1,15 @@
+0-0FFF  4KB  Used
+    0x900-?  loader
+1000-14FF  1280B  Reserved
+1500-1_9FFF 100KB-1280B  Kernel
+    7C00-7BFF  512B  MBR(it will be covered.)
+1_A000-3_9FFF  128KB  Physical Page Bitmap
+3_A000-6_FFFF  344KB  Available
+7_0000-8_8FFF  100KB  File of Kernel
+9_0000-9_0FFF  4KB  Kernel Page Directory
+9_1000-9_1FFF  4KB  Page Table of 0xC000_0000-0xC040_0000, Low 4MB Mapping.
+9_2000-9_9FFF  32KB  Kernel Page Bitmap
+9_A000-9_DFFF  16KB  Available
+9_E000-9_EFFF  4KB  TCB of Kernel
+9_F000-9_FBFF  3KB  Reserved
+9_FC00-10_0000  385KB  Used

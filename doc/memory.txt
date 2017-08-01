@@ -1,0 +1,7 @@
+0-3FF  1KB  Iterrupt Vector Table
+400-4FF  256B  BIOS Data Area
+500-7BFF  30646B  Available
+7C00-7DFF  512B  MBR
+7E00-9_FBFF  622080B  Available
+9_FC00-9_FFFF  1KB  EBDA(Extended BIOS Data Area)
+A_0000-10_0000  384KB  Used 

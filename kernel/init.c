@@ -12,5 +12,4 @@ void init_all(void)
     init_kernel_process();
     init_interrupt();
     init_timer();
-    put_int(get_mem(4));
 }

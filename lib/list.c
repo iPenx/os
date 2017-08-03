@@ -1,17 +1,29 @@
 #include "list.h"
 #include "stdint.h"
-#include "debug.h"
+
+int dlist_init(struct doubly_linked_list* dlist)
+{
+	dlist->head=NULL;
+	dlist->tail=NULL;
+	return 0;
+}
 
 int dlist_append(struct doubly_linked_list* dlist, struct doubly_linked_node* node)
 {
-    not_complete();
-    return 1;
+	dlist->tail->next=node;
+	node->prev=dlist->tail->next;
+	node->next=NULL;
+	dlist->tail=node;
+	return 0;
 }
 
-int dlist_init(struct doubly_linked_list* dlist){
-    dlist->head.prev=NULL;
-    dlist->head.next=&dlist->tail;
-    dlist->tail.prev=&dlist->head;
-    dlist->tail.next=NULL;
-    return 1;
+struct doubly_linked_node* dist_get(struct doubly_linked_list* dlist)
+{
+	struct doubly_linked_node* node;
+	node=dlist->head;
+	if( node != NULL )
+	{
+		dlist->head=node->next;
+	}
+	return node;
 }

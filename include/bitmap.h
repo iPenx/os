@@ -2,22 +2,26 @@
 #define _LIB_BITMAP_H
 
 #include "stdint.h"
-#include "string.h"
 
-#define BITMAP_MAX_NUM 0xFFFFFFFF
-#define BITMAP_ERROR 0xFFFFFFFF
+#define BITMAP_SUCCESS 0
+#define BITMAP_FULL 0xFFFFFFFF
+#define BITMAP_NOTFOUND 0xFFFFFFFF
+
+#define BITMAP_ERROR_EXCEED 0xFFFFFFFF
+#define BITMAP_ERROR_NOMEN 0x1
+
 struct bitmap
 {
     uint8_t* bit;
-    unsigned int num;
+    uint32_t num;
 };
 
-unsigned int bitmap_lookup_one(struct bitmap* bitmap);
-unsigned int bitmap_get_one(struct bitmap* bitmap);
-unsigned int bitmap_gets(struct bitmap* bitmap, unsigned int num);
+extern int bitmap_init(struct bitmap* bitmap, unsigned int num);
+extern unsigned int bitmap_lookup_one(struct bitmap* bitmap);
+extern uint32_t bitmap_get_one(struct bitmap* bitmap);
+extern uint32_t bitmap_gets(struct bitmap* bitmap, unsigned int num);
 int bitmap_query(struct bitmap* bitmap, unsigned int index);
-int bitmap_set(struct bitmap* bitmap, unsigned int index);
-int bitmap_clear(struct bitmap* bitmap, unsigned int index);
-int bitmap_init(struct bitmap* bitmap, unsigned int num);
+int bitmap_mask(struct bitmap* bitmap, unsigned int index);
+int bitmap_umask(struct bitmap* bitmap, unsigned int index);
 
 #endif

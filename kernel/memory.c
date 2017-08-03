@@ -30,7 +30,7 @@ static phy_addr_t get_a_phy_page()
 {
     print_func();
     unsigned int index;
-    if( (index=bitmap_get_one(&phy_page_pool.bitmap)) != BITMAP_ERROR)
+    if( (index=bitmap_get_one(&phy_page_pool.bitmap)) != BITMAP_FULL)
     {
         print_back();
         return (phy_page_pool.addr_start+index*PAGE_SIZE);
@@ -107,7 +107,7 @@ void* get_a_page()
 {
     print_func();
     unsigned int index;
-    if( (index=bitmap_get_one(&kernel_page_pool.bitmap)) == BITMAP_ERROR )
+    if( (index=bitmap_get_one(&kernel_page_pool.bitmap)) == BITMAP_FULL )
     {
         print_back();
         return NULL;
@@ -131,7 +131,7 @@ static void* get_pages(unsigned int num)
     unsigned int index;
     unsigned int x;
     void* page=NULL;
-    if( !((index=bitmap_gets(&kernel_page_pool.bitmap, num)) == BITMAP_ERROR) )
+    if( !((index=bitmap_gets(&kernel_page_pool.bitmap, num)) == BITMAP_FULL) )
     {
         for(x=0;x<num;x++)
 	{

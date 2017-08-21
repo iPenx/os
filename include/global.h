@@ -47,10 +47,9 @@
 
 struct loader_header
 {
-    uint32_t size;
-    uint32_t entry_16_bits;
+    uint32_t loader_size;
+    uint32_t loader_16_bits_entry;
     uint32_t total_mem;
 };
-
 
 #endif

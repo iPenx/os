@@ -5,14 +5,14 @@
 
 struct tcb
 {
-    void* kernel_stack;
-    unsigned int priority;
-    unsigned int ticks;
-    unsigned int elapsed_ticks;
-    struct pcb* pcb;
-    struct doubly_linked_node ready_node;
+	void* kernel_stack;
+	unsigned int priority;
+	unsigned int ticks;
+	unsigned int elapsed_ticks;
+	struct pcb* pcb;
+	struct doubly_linked_node thread_list_node;
 };
 
-void init_kernel_thread(struct pcb *pcb);
+extern void init_kernel_thread(struct pcb *pcb);
 
 #endif

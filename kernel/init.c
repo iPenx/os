@@ -9,7 +9,7 @@ void init_all(void)
 {
     put_str("\nInitialization");
     init_memory();
-    init_kernel_process();
     init_interrupt();
     init_timer();
+    init_kernel_thread();
 }

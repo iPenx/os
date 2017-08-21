@@ -26,22 +26,38 @@ static int check_addr_mapping(void* addr);
 static struct phy_page_pool phy_page_pool;
 static struct page_pool kernel_page_pool;
 
+void init_memory()
+{
+    put_str("\ninital memory...");
+
+    phy_page_pool.addr_start=AVAILABLE_MEM_START;
+    uint32_t total_mem=((struct loader_header*)(LOADER))->total_mem;
+    struct bitmap* bitmap=&phy_page_pool.bitmap;
+    bitmap->bit=(uint8_t*)PHY_PAGE_BITMAP;
+    bitmap->num=total_mem/PAGE_SIZE;
+    memset(bitmap->bit, 0, (bitmap->num)>>3);
+
+    kernel_page_pool.addr_start=(void*)KERNEL_AVAILABLE_PAGE_START;
+    bitmap=&kernel_page_pool.bitmap;
+    bitmap->bit=(uint8_t*)KERNEL_PAGE_BITMAP;
+    bitmap->num=KERNEL_AVAILABLE_MEM/PAGE_SIZE;
+    memset(bitmap->bit, 0, (bitmap->num)>>3);
+
+    put_str("\ninital memory... Done");
+}   
+
 static phy_addr_t get_a_phy_page()
 {
-    print_func();
     unsigned int index;
     if( (index=bitmap_get_one(&phy_page_pool.bitmap)) != BITMAP_FULL)
     {
-        print_back();
         return (phy_page_pool.addr_start+index*PAGE_SIZE);
     }
-    print_back();
     return 0;
 }
 
 static int mapping_addr(void* addr)
 {
-    print_func();
     uint32_t* pde=get_pde(addr);
     uint32_t* pte=get_pte(addr);
     phy_addr_t phy_addr;
@@ -57,7 +73,6 @@ static int mapping_addr(void* addr)
         }
 	else
 	{
-	    print_back();
 	    return 0;
         }
     }
@@ -69,11 +84,9 @@ static int mapping_addr(void* addr)
         }
 	else
 	{
-	    print_back();
 	    return 0;
         }
     }
-    print_back();
     return 1;
 }
 
@@ -105,11 +118,9 @@ static int check_addr_mapping(void* addr)
 
 void* get_a_page()
 {
-    print_func();
     unsigned int index;
     if( (index=bitmap_get_one(&kernel_page_pool.bitmap)) == BITMAP_FULL )
     {
-        print_back();
         return NULL;
     }
     void* page=(kernel_page_pool.addr_start)+index*PAGE_SIZE;
@@ -117,11 +128,9 @@ void* get_a_page()
     {
 	if( mapping_addr(page) == -1)
 	{
-            print_back();
 	    return NULL;
         }
     }
-    print_back();
     return page;
 }
 
@@ -156,7 +165,6 @@ static void* get_pages(unsigned int num)
         
 void* get_mem(unsigned int size)
 {
-    print_func();
     size=(size+4-1)/4;
     static unsigned int bottom=PAGE_SIZE;
     static void* cur_page=NULL;
@@ -165,41 +173,18 @@ void* get_mem(unsigned int size)
         if(bottom+size <= PAGE_SIZE)
         {
             bottom+=size;
-            print_back();
 	    return cur_page+bottom-size;
         }
         else
         {
             cur_page=get_a_page();
 	    bottom=size;
-            print_back();
 	    return cur_page;
         }
     }
     else
     {
-        print_back();
         return get_pages((size+PAGE_SIZE-1)/PAGE_SIZE);
     }
 }
 
-void init_memory()
-{
-    put_str("\ninital memory...");
-
-    phy_page_pool.addr_start=AVAILABLE_MEM_START;
-    uint32_t total_mem=((struct loader_header*)(LOADER))->total_mem;
-    struct bitmap* bitmap=&phy_page_pool.bitmap;
-    bitmap->bit=(uint8_t*)PHY_PAGE_BITMAP;
-    bitmap->num=((total_mem/PAGE_SIZE)>>3)<<3;
-    put_int(total_mem);
-    memset(bitmap->bit, 0, (bitmap->num)>>3);
-    
-    kernel_page_pool.addr_start=(void*)KERNEL_AVAILABLE_PAGE_START;
-    bitmap=&kernel_page_pool.bitmap;
-    bitmap->bit=(uint8_t*)KERNEL_PAGE_BITMAP;
-    bitmap->num=KERNEL_AVAILABLE_MEM/PAGE_SIZE;
-    memset(bitmap->bit, 0, (bitmap->num)>>3);
-
-    put_str("\ninital memory... Done");
-}   

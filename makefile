@@ -12,7 +12,7 @@ FLAGS_AS=-f elf
 FLAGS_C=$(LIB) $(INCLUDE) -m32 -c -W -fno-builtin -fno-stack-protector -Wstrict-prototypes -Wmissing-prototypes
 FLAGS_LD=-m elf_i386 -Ttext $(ENTRY_POINT) -e main -Map $(BUILD_DIR)/kernel.map
 
-OBJS=$(BUILD_DIR)/kernel.o $(BUILD_DIR)/init.o $(BUILD_DIR)/memory.o $(BUILD_DIR)/process.o $(BUILD_DIR)/thread.o $(BUILD_DIR)/list.o $(BUILD_DIR)/interrupt.o $(BUILD_DIR)/timer.o $(BUILD_DIR)/intr_proc.o $(BUILD_DIR)/print.o $(BUILD_DIR)/debug.o $(BUILD_DIR)/bitmap.o $(BUILD_DIR)/string.o
+OBJS=$(BUILD_DIR)/kernel.o $(BUILD_DIR)/init.o $(BUILD_DIR)/memory.o $(BUILD_DIR)/process.o $(BUILD_DIR)/thread.o $(BUILD_DIR)/list.o $(BUILD_DIR)/interrupt.o $(BUILD_DIR)/timer.o $(BUILD_DIR)/intr_proc.o $(BUILD_DIR)/print.o $(BUILD_DIR)/debug.o $(BUILD_DIR)/bitmap.o $(BUILD_DIR)/string.o $(BUILD_DIR)/switch_to.o
 
 ##########     bootloader     ##########
 mbr: include/boot.inc boot/mbr.asm
@@ -65,6 +65,9 @@ $(BUILD_DIR)/intr_proc.o: kernel/intr_proc.asm
 	$(AS) $(FLAGS_AS) $< -o $@
 
 $(BUILD_DIR)/print.o: lib/print.asm
+	$(AS) $(FLAGS_AS) $< -o $@
+
+$(BUILD_DIR)/switch_to.o: kernel/thread_c_switch_to.asm
 	$(AS) $(FLAGS_AS) $< -o $@
 
 ##########     Link     ##########

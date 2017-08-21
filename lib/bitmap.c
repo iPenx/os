@@ -1,6 +1,7 @@
 #include "stdint.h"
 #include "bitmap.h"
 #include "memory.h"
+#include "string.h"
 #include "debug.h"
 
 #define BITMAP_MASK 1
@@ -16,11 +17,11 @@ int bitmap_init( struct bitmap* bitmap, uint32_t num )
 	if( (bitmap->bit=get_mem((num+8-1)>>3)) == NULL ) 
 	{
 		bitmap->bit=NULL;
-	bitmap->num=0;
+		bitmap->num=0;
 		return BITMAP_ERROR_NOMEN;
 	}
-
 	bitmap->num=num;
+	memset(bitmap->bit, 0, (num+8-1)>>3);
 
 	uint8_t* last_byte=(bitmap->bit)+((num-1)/8);
 	int count_set=8-num-((num>>3)<<3);

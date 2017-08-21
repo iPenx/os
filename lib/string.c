@@ -5,10 +5,8 @@
 
 void memset(void* dst, uint8_t value, uint32_t size)
 {
-    print_func();
     while(size-->0)
         *(uint8_t*)dst++=value;
-    print_back();
 }
 
 void memcpy(void* dst, const void* src, uint32_t size)

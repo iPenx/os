@@ -7,6 +7,9 @@ section .text
 intr_%1_proc:
     %2
     pushad
+    push ds
+    mov ax,0x10
+    mov ds,ax
 
     mov eax,0x20
     out 0xa0,al
@@ -25,6 +28,7 @@ extern intr_proc_table
 section .text
 interrupt_exit:
     add esp,4
+    pop ds
     popad
     add esp,4
     iret

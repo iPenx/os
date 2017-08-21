@@ -5,11 +5,10 @@
 #include "thread.h"
 #include "debug.h"
 
-static struct doubly_linked_list pcb_list;
-
 void init_kernel_process()
 {
-    put_str("initial kernel process...");
+    put_str("\ninitial kernel process...");
+
     struct pcb* pcb=get_mem(sizeof(*pcb));
     pcb->page_dir=KERNEL_PAGE_DIR;
     pcb->page_pool.bitmap.bit=(uint8_t*)KERNEL_PAGE_BITMAP;

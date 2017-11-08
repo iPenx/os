@@ -3,9 +3,11 @@
 
 #include "process.h"
 
+typedef void t_thread_func(void*);
+
 struct tcb
 {
-	void* kernel_stack;
+	uint32_t* kernel_stack;
 	unsigned int priority;
 	unsigned int ticks;
 	unsigned int elapsed_ticks;
@@ -13,6 +15,7 @@ struct tcb
 	struct doubly_linked_node thread_list_node;
 };
 
-extern void init_kernel_thread(struct pcb *pcb);
+extern void init_kernel_thread(void);
+extern void start_thread(t_thread_func* func, void* arg);
 
 #endif

@@ -1,11 +1,22 @@
 [bits 32]
 global switch_to
+extern put_int
 section .text
 switch_to:
-	mov eax,[esp+4]
+	push esi
+	push edi
+	push ebx
+	push ebp
+
+	mov eax,[esp+20]
 	mov [eax],esp
 
-	mov eax,[esp+8]
+	mov eax,[esp+24]
 	mov esp,[eax]
+
+	pop ebp
+	pop ebx
+	pop edi
+	pop esi
 
 	ret

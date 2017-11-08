@@ -13,7 +13,7 @@ int dlist_init(struct doubly_linked_list* dlist)
 	return 0;
 }
 
-int dlist_append(struct doubly_linked_list* dlist, struct doubly_linked_node* node)
+int dlist_add(struct doubly_linked_list* dlist, struct doubly_linked_node* node)
 {
 	struct doubly_linked_node *prev, *next;
 	prev=dlist->tail.prev;
@@ -30,7 +30,7 @@ struct doubly_linked_node* dlist_pop(struct doubly_linked_list* dlist)
 	struct doubly_linked_node *node, *head;
 	head=&(dlist->head);
 	node=head->next;
-	if(node == &(dlist->tail) )
+	if( node == &(dlist->tail) )
 	{
 		return NULL;
 	}

@@ -15,7 +15,7 @@ struct doubly_linked_list
 
 extern int dlist_init(struct doubly_linked_list* dlist);
 
-extern int dlist_append(struct doubly_linked_list* dlist, struct doubly_linked_node* node);
+extern int dlist_add(struct doubly_linked_list* dlist, struct doubly_linked_node* node);
 
 extern struct doubly_linked_node* dlist_pop(struct doubly_linked_list* dlist);
 
